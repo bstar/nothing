@@ -41,8 +41,6 @@ campaignStore = Reflux.createStore({
   }
 });
 
-
-
 var Body = React.createClass({
   mixins: [ReactRouter.State, ReactRouter.Navigation, Reflux.connect(campaignStore, "campaign")],
   statics: {
@@ -64,15 +62,28 @@ var Body = React.createClass({
       }
     });
 
-    var index = 1;
-    var codecs = _.map(this.state.campaign.codecs, function(codec) { return { value: index++, text: codec }; });
-
     $('#codecs').editable({
       mode: this.state.mode,
-      pk: 1,
-      limit: 3,
-      source: codecs
-     });
+      rows: 5,
+      showbuttons: 'bottom'
+    });
+
+    $('#stages').editable({
+      mode: this.state.mode,
+      rows: 10,
+      showbuttons: 'bottom'
+    });
+
+    $('#resolution').editable({
+      mode: this.state.mode,
+      rows: 10,
+      showbuttons: 'bottom'
+    });
+    $('#mail').editable({
+      mode: this.state.mode,
+      rows: 10,
+      showbuttons: 'bottom'
+    });
 
     var self = this;
     $('#user .editable').on('hidden', function(e, reason){
@@ -154,19 +165,37 @@ var Body = React.createClass({
                         <tr>
                           <td style={{width: 300}}>Campaign ID</td>
                           <td>
-                            <a href='#' key={this.state.refresh} className='xeditable' data-type='text' data-title='Enter username'>{this.state.campaign.id}</a>
+                            <a href='#' key={this.state.refresh} className='xeditable' data-type='text' data-title='Campaign ID'>{this.state.campaign.id}</a>
                           </td>
                         </tr>
                         <tr>
                           <td style={{width: 300}}>Campaign Name</td>
                           <td>
-                            <a href='#' key={this.state.refresh} className='xeditable' data-type='text' data-title='Enter username'>{this.state.campaign.name}</a>
+                            <a href='#' key={this.state.refresh} className='xeditable' data-type='text' data-title='Campaign Name'>{this.state.campaign.name}</a>
                           </td>
                         </tr>
                         <tr>
                           <td>Codecs</td>
                           <td>
-                            <a href='#' key={this.state.refresh} id='codecs' data-type='checklist' data-value='1,2,3,4,5,6,7,8,9' data-title='Select Codecs'></a>
+                            <a href='#' key={this.state.refresh} id='codecs' data-type='textarea' data-pk='1' data-placeholder='' data-title='Supported Codecs'>{JSON.stringify(this.state.campaign.codecs, null, 2)}</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Resolution</td>
+                          <td>
+                            <a href='#' key={this.state.refresh} id='resolution' data-type='textarea' data-pk='1' data-placeholder='' data-title='Resolution Settings'>{JSON.stringify(this.state.campaign.resolution, null, 2)}</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Campaign Stages</td>
+                          <td>
+                            <a href='#' key={this.state.refresh} id='stages' data-type='textarea' data-pk='1' data-placeholder='' data-title='Listing Stages'>{JSON.stringify(this.state.campaign.stages, null, 2)}</a>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail</td>
+                          <td>
+                            <a href='#' key={this.state.refresh} id='mail' data-type='textarea' data-pk='1' data-placeholder='' data-title='Listing Stages'>{JSON.stringify(this.state.campaign.mail, null, 2)}</a>
                           </td>
                         </tr>
                       </tbody>
@@ -185,7 +214,7 @@ var Body = React.createClass({
 var classSet = React.addons.classSet;
 var Xeditable = React.createClass({
   mixins: [SidebarMixin],
-  render: function() {
+  render: function () {
     var classes = classSet({
       'container-open': this.state.open
     });

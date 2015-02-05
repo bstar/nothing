@@ -1,5 +1,5 @@
 @charset "UTF-8";
-/*! rukus - v1.0.0 - 2015-02-03 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
+/*! rukus - v1.0.0 - 2015-02-04 [copyright: SketchPixy LLP, email: support@sketchpixy.com] */
 /* REQUIRED: DO NOT REMOVE */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 html {
@@ -10029,8 +10029,7 @@ ul.messenger.messenger-spinner-active .messenger-spinner .messenger-spinner {
   /* should be less than select2 dropdown z-index to close dropdown first when click */ }
 
 .editable-click, a.editable-click, a.editable-click:hover {
-  text-decoration: none;
-  border-bottom: dashed 1px #0088cc; }
+  text-decoration: none; }
 
 .editable-click.editable-disabled, a.editable-click.editable-disabled, a.editable-click.editable-disabled:hover {
   color: #585858;

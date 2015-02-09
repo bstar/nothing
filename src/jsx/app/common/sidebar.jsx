@@ -8,7 +8,7 @@ var ApplicationSidebar = React.createClass({
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
                   <SidebarNavItem href='/app/tables/datatables' glyph='icon-fontello-th-2' name='Renders' />
-                  <SidebarNavItem glyph='icon-stroke-gap-icons-Edit' href='/app/forms/xeditable' name='Campaign Editor' />
+                  <SidebarNavItem glyph='icon-stroke-gap-icons-Edit' href='/app/forms/campaign' name='Campaign Editor' />
                   <SidebarNavItem glyph='icon-mfizz-fire-alt' href='/app/forms/controls' name='Controls' />
                 </SidebarNav>
               </div>

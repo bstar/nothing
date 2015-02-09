@@ -5,7 +5,7 @@ var notfound = require('./routes/notfound.jsx');
 var blank = require('./routes/app/blank.jsx');
 var datatables = require('./routes/app/datatables.jsx');
 var form_controls = require('./routes/app/form_controls.jsx');
-var xeditable = require('./routes/app/xeditable.jsx');
+var campaign = require('./routes/app/xeditable.jsx');
 
 /* ROUTES */
 module.exports = (
@@ -15,6 +15,6 @@ module.exports = (
     <NotFoundRoute handler={notfound} />
     <Route path='/app/tables/datatables' handler={datatables} />
     <Route path='/app/forms/controls' handler={form_controls} />
-    <Route path='/app/forms/xeditable' handler={xeditable} />
+    <Route path='/app/forms/campaign' handler={campaign} />
   </Route>
 );

@@ -8,7 +8,7 @@ var ActionCreators = require('../../actions/campaign_actions');
 var API = require('../../utils/api_utils');
 
 // TODO get resource and record id from route
-API.get("549e317d75338a1f0b8de152", "campaigns");
+API.get("54d82b4ed878b913a1c9cc1d", "campaigns");
 
 function _getStateFromStores () {
   console.log("_getStateFromStores()");
@@ -21,6 +21,10 @@ function _getStateFromStores () {
 
 var Body = React.createClass({
   mixins: [ ReactRouter.State, ReactRouter.Navigation ],
+
+  refresh: function () {
+    return this.state.refresh;
+  },
 
   statics: {
     counter: 0,
@@ -53,6 +57,7 @@ var Body = React.createClass({
   _onChange: function () {
     this.setState(_getStateFromStores());
   },
+
   _onUpdated: function () {
     ActionCreators.updateCampaign(this.state.campaign);
   },
@@ -108,9 +113,21 @@ var Body = React.createClass({
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail</td>
+                          <td>Mail Active</td>
                           <td>
-                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail'} />
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.active'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail From Email</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.from_email'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail From Name</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.from_name'} />
                           </td>
                         </tr>
                       </tbody>
@@ -135,6 +152,10 @@ var ContentEditable = React.createClass({
           dangerouslySetInnerHTML={{__html: this.props.html}}></div>;
     },
 
+    componentDidMount: function () {
+      var self = this;
+    },
+
     shouldComponentUpdate: function (nextProps) {
       return nextProps.html !== this.getDOMNode().innerHTML;
     },
@@ -148,9 +169,9 @@ var ContentEditable = React.createClass({
     emitChange: function (e) {
       var html = this.getDOMNode().innerHTML;
 
-      if (this.props.onChange && html !== this.lastHtml) {
+      if (this.props.onBlur && html !== this.lastHtml) {
         e.target = { value: html };
-        this.props.onChange(e);
+        this.props.onBlur(e);
       }
 
       this.lastHtml = html;
@@ -159,38 +180,52 @@ var ContentEditable = React.createClass({
 
 var EditableField = React.createClass({
   getInitialState: function () {
-    var content = this.props.campaign[this.props.type],
-        contentString = (typeof content === "object") ? JSON.stringify(content) : content;
+    var campaign = this.props.campaign,
+        types = this.props.type.split(".");
 
-    return { html: contentString };
+    for (var i = 0, len = types.length; i < len; i++) {
+      campaign = campaign[types[i]];
+    }
+
+    return { html: campaign };
   },
 
   handleChange: function (e) {
-    this.props.campaign[this.props.type] = e.target.value;
-    this.setState({ html: e.target.value, refresh: Body.getCounter(), campaign: this.props.campaign });
+    var campaign = this.props.campaign,
+        path = this.props.type.split("."),
+        obj = "campaign";
+
+    for (var i = 0, len = path.length; i < len; i++) {
+        obj += '.' + path[i];
+    };
+
+    // TODO handle this safer
+    eval(obj + "=" + '"' + e.target.value + '"');
+
+    this.setState({ html: e.target.value, refresh: Body.getCounter(), campaign: campaign });
   },
 
   render: function () {
-    return <ContentEditable html={this.state.html} onChange={this.handleChange} />
+    return <ContentEditable html={this.state.html} campaign={this.state.campaign} type={this.state.type} onBlur={this.handleChange} />
   }
 });
 
-var classSet = React.addons.classSet;
-var Xeditable = React.createClass({
-  mixins: [SidebarMixin],
-  render: function () {
-    var classes = classSet({
-      'container-open': this.state.open
-    });
-    return (
-      <Container id='container' className={classes}>
-        <Sidebar />
-        <Header />
-        <Body />
-        <Footer />
-      </Container>
-    );
-  }
+var classSet = React.addons.classSet,
+    CampaignView = React.createClass({
+      mixins: [SidebarMixin],
+      render: function () {
+        var classes = classSet({
+          'container-open': this.state.open
+        });
+        return (
+          <Container id='container' className={classes}>
+            <Sidebar />
+            <Header />
+            <Body />
+            <Footer />
+          </Container>
+        );
+      }
 });
 
-module.exports = Xeditable;
+module.exports = CampaignView;

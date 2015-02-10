@@ -148,7 +148,6 @@ var Body = React.createClass({
 var ContentEditable = React.createClass({
     render: function () {
       return <div id="contenteditable"
-          onInput={this.emitChange}
           onBlur={this.emitChange}
           contentEditable
           dangerouslySetInnerHTML={{__html: this.props.html}}></div>;
@@ -160,6 +159,7 @@ var ContentEditable = React.createClass({
 
     componentDidUpdate: function () {
       if ( this.props.html !== this.getDOMNode().innerHTML ) {
+        console.log("should not update");
         this.getDOMNode().innerHTML = this.props.html;
       }
     },
@@ -191,17 +191,14 @@ var EditableField = React.createClass({
   handleChange: function (e) {
     var campaign = this.props.campaign,
         path = this.props.type.split("."),
-        campaignStr = "campaign";
+        campaignStr = "campaign",
+        value = JSON.parse(e.target.value);
 
     for (var i = 0, len = path.length; i < len; i++) {
       campaignStr += '.' + path[i];
     };
 
-    // TODO handle this safer
-    var value = JSON.parse(e.target.value);
-
-    eval(campaignStr + "=" + '"' + value + '"');
-
+    eval(campaignStr + "=value");
     this.setState({ html: e.target.value, refresh: Body.getCounter(), campaign: campaign });
   },
 

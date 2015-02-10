@@ -13,8 +13,10 @@ module.exports = {
     });
   },
 
-  update: function (id, resource, content) {
+  put: function (id, resource, content) {
     console.log("Updating: " + id);
+
+    delete content.id;
 
     request
       .put(apiSource + "/" + resource + "/" + id)
@@ -22,8 +24,7 @@ module.exports = {
       .end(onResponse);
 
     function onResponse(err, res) {
-      ActionCreators.getCampaign(res.body);
-      return done();
+      ActionCreators.updateCampaign(res.body);
     }
   }
 };

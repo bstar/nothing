@@ -13,7 +13,6 @@ API.get("54d82b4ed878b913a1c9cc1d", "campaigns");
 function _getStateFromStores () {
   console.log("_getStateFromStores()");
   return {
-    mode: 'popup',
     refresh: Body.getCounter(), // used to redraw the component
     campaign: CampaignStore.getCampaign()
   };
@@ -37,11 +36,6 @@ var Body = React.createClass({
     return _getStateFromStores();
   },
 
-  handleModeChange: function (mode, e) {
-    e.stopPropagation();
-    this.setState({ mode: mode, refresh: Body.getCounter() });
-  },
-
   componentDidMount: function () {
     this.campaign = CampaignStore.listen(this._onChange);
   },
@@ -51,7 +45,7 @@ var Body = React.createClass({
   },
 
   _onChange: function () {
-    this.setState(_getStateFromStores());
+    // this.setState(_getStateFromStores());
   },
 
   _onUpdated: function () {
@@ -111,25 +105,25 @@ var Body = React.createClass({
                         <tr>
                           <td>Mail Active</td>
                           <td>
-                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.active'} />
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.active'} />
                           </td>
                         </tr>
                         <tr>
                           <td>Mail Subject</td>
                           <td>
-                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.subject'} />
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.subject'} />
                           </td>
                         </tr>
                         <tr>
                           <td>Mail From Email</td>
                           <td>
-                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.from_email'} />
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_email'} />
                           </td>
                         </tr>
                         <tr>
                           <td>Mail From Name</td>
                           <td>
-                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.from_name'} />
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_name'} />
                           </td>
                         </tr>
                       </tbody>
@@ -199,6 +193,8 @@ var EditableField = React.createClass({
     };
 
     eval(campaignStr + "=value");
+
+    CampaignStore.updateCampaign(campaign);
     this.setState({ html: e.target.value, refresh: Body.getCounter(), campaign: campaign });
   },
 

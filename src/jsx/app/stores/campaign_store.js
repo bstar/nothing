@@ -2,12 +2,15 @@
 
 var Reflux = require('reflux');
 var ActionCreators = require('../actions/campaign_actions');
+var API = require('../utils/api_utils');
+
 
 var CampaignStore = Reflux.createStore({
   init: function () {
     this._campaign = {};
     this._campaigns = [];
     this.listenTo(ActionCreators.getCampaign, this.onReceiveCampaign);
+    this.listenTo(ActionCreators.updateCampaign, this.onReceiveCampaign);
   },
 
   onReceiveCampaign: function (campaign) {
@@ -23,6 +26,8 @@ var CampaignStore = Reflux.createStore({
   },
 
   updateCampaign: function (campaign) {
+    console.log("updateCampaign()");
+    API.put("54d82b4ed878b913a1c9cc1d", "campaigns", campaign);
 
     this.trigger();
   },

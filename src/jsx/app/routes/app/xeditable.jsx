@@ -42,10 +42,6 @@ var Body = React.createClass({
     this.setState({ mode: mode, refresh: Body.getCounter() });
   },
 
-  toggleEditable: function () {
-    $('#user .editable').editable('toggleDisabled');
-  },
-
   componentDidMount: function () {
     this.campaign = CampaignStore.listen(this._onChange);
   },
@@ -119,6 +115,12 @@ var Body = React.createClass({
                           </td>
                         </tr>
                         <tr>
+                          <td>Mail Subject</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.subject'} />
+                          </td>
+                        </tr>
+                        <tr>
                           <td>Mail From Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} set={0} type={'mail.default.from_email'} />
@@ -152,10 +154,6 @@ var ContentEditable = React.createClass({
           dangerouslySetInnerHTML={{__html: this.props.html}}></div>;
     },
 
-    componentDidMount: function () {
-      var self = this;
-    },
-
     shouldComponentUpdate: function (nextProps) {
       return nextProps.html !== this.getDOMNode().innerHTML;
     },
@@ -187,20 +185,22 @@ var EditableField = React.createClass({
       campaign = campaign[types[i]];
     }
 
-    return { html: campaign };
+    return { html: JSON.stringify(campaign) };
   },
 
   handleChange: function (e) {
     var campaign = this.props.campaign,
         path = this.props.type.split("."),
-        obj = "campaign";
+        campaignStr = "campaign";
 
     for (var i = 0, len = path.length; i < len; i++) {
-        obj += '.' + path[i];
+      campaignStr += '.' + path[i];
     };
 
     // TODO handle this safer
-    eval(obj + "=" + '"' + e.target.value + '"');
+    var value = JSON.parse(e.target.value);
+
+    eval(campaignStr + "=" + '"' + value + '"');
 
     this.setState({ html: e.target.value, refresh: Body.getCounter(), campaign: campaign });
   },

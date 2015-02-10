@@ -10194,9 +10194,9 @@
 	var ReactInstanceHandles = __webpack_require__(67);
 	var ReactPerf = __webpack_require__(13);
 
-	var containsNode = __webpack_require__(114);
+	var containsNode = __webpack_require__(112);
 	var deprecated = __webpack_require__(73);
-	var getReactRootElementInContainer = __webpack_require__(115);
+	var getReactRootElementInContainer = __webpack_require__(113);
 	var instantiateReactComponent = __webpack_require__(30);
 	var invariant = __webpack_require__(18);
 	var shouldUpdateReactComponent = __webpack_require__(35);
@@ -10889,9 +10889,9 @@
 	"use strict";
 
 	var ReactComponent = __webpack_require__(9);
-	var ReactMultiChildUpdateTypes = __webpack_require__(112);
+	var ReactMultiChildUpdateTypes = __webpack_require__(114);
 
-	var flattenChildren = __webpack_require__(113);
+	var flattenChildren = __webpack_require__(115);
 	var instantiateReactComponent = __webpack_require__(30);
 	var shouldUpdateReactComponent = __webpack_require__(35);
 
@@ -14711,7 +14711,7 @@
 	var ReactPerf = __webpack_require__(13);
 	var ReactReconcileTransaction = __webpack_require__(132);
 
-	var getReactRootElementInContainer = __webpack_require__(115);
+	var getReactRootElementInContainer = __webpack_require__(113);
 	var invariant = __webpack_require__(18);
 	var setInnerHTML = __webpack_require__(133);
 
@@ -16657,6 +16657,93 @@
 	 * LICENSE file in the root directory of this source tree. An additional grant
 	 * of patent rights can be found in the PATENTS file in the same directory.
 	 *
+	 * @providesModule containsNode
+	 * @typechecks
+	 */
+
+	var isTextNode = __webpack_require__(147);
+
+	/*jslint bitwise:true */
+
+	/**
+	 * Checks if a given DOM node contains or is another DOM node.
+	 *
+	 * @param {?DOMNode} outerNode Outer DOM node.
+	 * @param {?DOMNode} innerNode Inner DOM node.
+	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
+	 */
+	function containsNode(outerNode, innerNode) {
+	  if (!outerNode || !innerNode) {
+	    return false;
+	  } else if (outerNode === innerNode) {
+	    return true;
+	  } else if (isTextNode(outerNode)) {
+	    return false;
+	  } else if (isTextNode(innerNode)) {
+	    return containsNode(outerNode, innerNode.parentNode);
+	  } else if (outerNode.contains) {
+	    return outerNode.contains(innerNode);
+	  } else if (outerNode.compareDocumentPosition) {
+	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
+	  } else {
+	    return false;
+	  }
+	}
+
+	module.exports = containsNode;
+
+
+/***/ },
+/* 113 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
+	 * @providesModule getReactRootElementInContainer
+	 */
+
+	"use strict";
+
+	var DOC_NODE_TYPE = 9;
+
+	/**
+	 * @param {DOMElement|DOMDocument} container DOM element that may contain
+	 *                                           a React component
+	 * @return {?*} DOM element that may have the reactRoot ID, or null.
+	 */
+	function getReactRootElementInContainer(container) {
+	  if (!container) {
+	    return null;
+	  }
+
+	  if (container.nodeType === DOC_NODE_TYPE) {
+	    return container.documentElement;
+	  } else {
+	    return container.firstChild;
+	  }
+	}
+
+	module.exports = getReactRootElementInContainer;
+
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Copyright 2013-2014, Facebook, Inc.
+	 * All rights reserved.
+	 *
+	 * This source code is licensed under the BSD-style license found in the
+	 * LICENSE file in the root directory of this source tree. An additional grant
+	 * of patent rights can be found in the PATENTS file in the same directory.
+	 *
 	 * @providesModule ReactMultiChildUpdateTypes
 	 */
 
@@ -16683,7 +16770,7 @@
 
 
 /***/ },
-/* 113 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/**
@@ -16753,93 +16840,6 @@
 	module.exports = flattenChildren;
 	
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(37)))
-
-/***/ },
-/* 114 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule containsNode
-	 * @typechecks
-	 */
-
-	var isTextNode = __webpack_require__(147);
-
-	/*jslint bitwise:true */
-
-	/**
-	 * Checks if a given DOM node contains or is another DOM node.
-	 *
-	 * @param {?DOMNode} outerNode Outer DOM node.
-	 * @param {?DOMNode} innerNode Inner DOM node.
-	 * @return {boolean} True if `outerNode` contains or is `innerNode`.
-	 */
-	function containsNode(outerNode, innerNode) {
-	  if (!outerNode || !innerNode) {
-	    return false;
-	  } else if (outerNode === innerNode) {
-	    return true;
-	  } else if (isTextNode(outerNode)) {
-	    return false;
-	  } else if (isTextNode(innerNode)) {
-	    return containsNode(outerNode, innerNode.parentNode);
-	  } else if (outerNode.contains) {
-	    return outerNode.contains(innerNode);
-	  } else if (outerNode.compareDocumentPosition) {
-	    return !!(outerNode.compareDocumentPosition(innerNode) & 16);
-	  } else {
-	    return false;
-	  }
-	}
-
-	module.exports = containsNode;
-
-
-/***/ },
-/* 115 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Copyright 2013-2014, Facebook, Inc.
-	 * All rights reserved.
-	 *
-	 * This source code is licensed under the BSD-style license found in the
-	 * LICENSE file in the root directory of this source tree. An additional grant
-	 * of patent rights can be found in the PATENTS file in the same directory.
-	 *
-	 * @providesModule getReactRootElementInContainer
-	 */
-
-	"use strict";
-
-	var DOC_NODE_TYPE = 9;
-
-	/**
-	 * @param {DOMElement|DOMDocument} container DOM element that may contain
-	 *                                           a React component
-	 * @return {?*} DOM element that may have the reactRoot ID, or null.
-	 */
-	function getReactRootElementInContainer(container) {
-	  if (!container) {
-	    return null;
-	  }
-
-	  if (container.nodeType === DOC_NODE_TYPE) {
-	    return container.documentElement;
-	  } else {
-	    return container.firstChild;
-	  }
-	}
-
-	module.exports = getReactRootElementInContainer;
-
 
 /***/ },
 /* 116 */
@@ -17656,7 +17656,7 @@
 
 	var ReactDOMSelection = __webpack_require__(151);
 
-	var containsNode = __webpack_require__(114);
+	var containsNode = __webpack_require__(112);
 	var focusNode = __webpack_require__(152);
 	var getActiveElement = __webpack_require__(138);
 
@@ -19720,7 +19720,7 @@
 	"use strict";
 
 	var Danger = __webpack_require__(158);
-	var ReactMultiChildUpdateTypes = __webpack_require__(112);
+	var ReactMultiChildUpdateTypes = __webpack_require__(114);
 
 	var getTextContentAccessor = __webpack_require__(129);
 	var invariant = __webpack_require__(18);

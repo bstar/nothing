@@ -18,6 +18,19 @@ function _getStateFromStores () {
   };
 }
 
+var heading = {
+  border: 'none',
+  'padding-top': '20px',
+  'font-weight': 'bold',
+  'font-size': '1.2em',
+  'background-color': 'white'
+};
+
+var noBorder = {
+  border: 'none',
+  margin: 0
+};
+
 var Body = React.createClass({
   mixins: [ ReactRouter.State, ReactRouter.Navigation ],
 
@@ -45,7 +58,7 @@ var Body = React.createClass({
   },
 
   _onChange: function () {
-    // this.setState(_getStateFromStores());
+    this.setState(_getStateFromStores());
   },
 
   _onUpdated: function () {
@@ -70,8 +83,11 @@ var Body = React.createClass({
                     </Grid>
                   </PanelHeader>
                   <PanelBody style={{padding: 25}}>
-                    <Table striped bordered id='user' style={{margin: 0}}>
+                    <Table striped bordered id='user' style={noBorder}>
                       <tbody>
+                        <tr>
+                          <td style={heading}>Base Configurations</td>
+                        </tr>
                         <tr>
                           <td style={{width: 300}}>Campaign ID</td>
                           <td>
@@ -103,6 +119,9 @@ var Body = React.createClass({
                           </td>
                         </tr>
                         <tr>
+                          <td style={heading}>Mail Configurations</td>
+                        </tr>
+                        <tr>
                           <td>Mail Active</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.active'} />
@@ -115,6 +134,30 @@ var Body = React.createClass({
                           </td>
                         </tr>
                         <tr>
+                          <td>Mail First Name</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.first_name'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail Last Name</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.last_name'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail To Email</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_email'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail To Name</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_name'} />
+                          </td>
+                        </tr>
+                        <tr>
                           <td>Mail From Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_email'} />
@@ -124,6 +167,12 @@ var Body = React.createClass({
                           <td>Mail From Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_name'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td>Mail Global Merge Vars</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.global_merge_vars'} />
                           </td>
                         </tr>
                       </tbody>

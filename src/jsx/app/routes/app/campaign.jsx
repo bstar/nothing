@@ -8,7 +8,7 @@ var ActionCreators = require('../../actions/campaign_actions');
 var API = require('../../utils/api_utils');
 
 // TODO get resource and record id from route
-API.get("54d82b4ed878b913a1c9cc1d", "campaigns");
+API.getOne("54d82b4ed878b913a1c9cc1d", "campaigns");
 
 function _getStateFromStores () {
   console.log("_getStateFromStores()");
@@ -86,91 +86,91 @@ var Body = React.createClass({
                     <Table striped bordered id='user' style={noBorder}>
                       <tbody>
                         <tr>
-                          <td style={heading}>Base Configurations</td>
+                          <td style={heading}>Base Configuration</td>
                         </tr>
                         <tr>
-                          <td style={{width: 300}}>Campaign ID</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign ID</td>
                           <td>
                             <div href='#' key={this.state.refresh} >{this.state.campaign.id}</div>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300}}>Campaign Name</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Codecs</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Codecs</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'codecs'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Resolution</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Resolution</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'resolution'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Campaign Stages</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign Stages</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'stages'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={heading}>Mail Configurations</td>
+                          <td style={heading}>Mail Configuration</td>
                         </tr>
                         <tr>
-                          <td>Mail Active</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Active</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.active'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail Subject</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Subject</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.subject'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail First Name</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>First Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.first_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail Last Name</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Last Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.last_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail To Email</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>To Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_email'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail To Name</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>To Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail From Email</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>From Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_email'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail From Name</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>From Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td>Mail Global Merge Vars</td>
+                          <td style={{width: 300, 'font-weight':'bold'}}>Global Merge Vars</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.global_merge_vars'} />
                           </td>

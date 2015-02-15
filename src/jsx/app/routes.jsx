@@ -3,9 +3,9 @@ var notfound = require('./routes/notfound.jsx');
 
 /* APP PAGES */
 var blank = require('./routes/app/blank.jsx');
-var datatables = require('./routes/app/datatables.jsx');
 var form_controls = require('./routes/app/form_controls.jsx');
-var campaign = require('./routes/app/xeditable.jsx');
+var campaign = require('./routes/app/campaign.jsx');
+var campaigns = require('./routes/app/campaigns.jsx');
 
 /* ROUTES */
 module.exports = (
@@ -13,8 +13,8 @@ module.exports = (
     <DefaultRoute handler={blank} />
     <Route path='/' handler={blank} />
     <NotFoundRoute handler={notfound} />
-    <Route path='/app/tables/datatables' handler={datatables} />
+    <Route path='/app/campaigns' handler={campaigns} />
     <Route path='/app/forms/controls' handler={form_controls} />
-    <Route path='/app/forms/campaign' handler={campaign} />
+    <Route path='/app/campaigns/:campaignId' handler={campaign} />
   </Route>
 );

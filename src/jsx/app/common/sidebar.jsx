@@ -7,9 +7,9 @@ var ApplicationSidebar = React.createClass({
             <Col xs={12}>
               <div className='sidebar-nav-container'>
                 <SidebarNav style={{marginBottom: 0}}>
-                  <SidebarNavItem href='/app/tables/datatables' glyph='icon-fontello-th-2' name='Renders' />
-                  <SidebarNavItem glyph='icon-stroke-gap-icons-Edit' href='/app/forms/campaign' name='Campaign Editor' />
-                  <SidebarNavItem glyph='icon-mfizz-fire-alt' href='/app/forms/controls' name='Controls' />
+                  <SidebarNavItem href='/app/campaigns' glyph='icon-fontello-th-2' name='Campaigns' />
+                  <SidebarNavItem glyph='icon-stroke-gap-icons-Edit' href='/app/campaigns/54d82b4ed878b913a1c9cc1d' name='Campaign Editor' />
+                  <SidebarNavItem glyph='icon-mfizz-fire-alt' href='/app/forms/controls' name='Campaign Form' />
                 </SidebarNav>
               </div>
             </Col>

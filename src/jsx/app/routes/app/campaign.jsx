@@ -11,7 +11,6 @@ var API = require('../../utils/api_utils');
 API.getOne("54d82b4ed878b913a1c9cc1d", "campaigns");
 
 function _getStateFromStores () {
-  console.log("_getStateFromStores()");
   return {
     refresh: Body.getCounter(), // used to redraw the component
     campaign: CampaignStore.getCampaign()
@@ -20,10 +19,9 @@ function _getStateFromStores () {
 
 var heading = {
   border: 'none',
-  'padding-top': '20px',
-  'font-weight': 'bold',
-  'font-size': '1.2em',
-  'background-color': 'white'
+  'fontWeight': 'bold',
+  'fontSize': '1.2em',
+  'backgroundColor': 'white'
 };
 
 var noBorder = {
@@ -89,31 +87,31 @@ var Body = React.createClass({
                           <td style={heading}>Base Configuration</td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign ID</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Campaign ID</td>
                           <td>
-                            <div href='#' key={this.state.refresh} >{this.state.campaign.id}</div>
+                            <div href='#' key={this.state.refresh}>{this.state.campaign.id}</div>
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign Name</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Campaign Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Codecs</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Codecs</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'codecs'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Resolution</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Resolution</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'resolution'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Campaign Stages</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Campaign Stages</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'stages'} />
                           </td>
@@ -122,55 +120,55 @@ var Body = React.createClass({
                           <td style={heading}>Mail Configuration</td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Active</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Active</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.active'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Subject</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Subject</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.subject'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>First Name</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>First Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.first_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Last Name</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Last Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.last_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>To Email</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>To Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_email'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>To Name</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>To Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.to_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>From Email</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>From Email</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_email'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>From Name</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>From Name</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.from_name'} />
                           </td>
                         </tr>
                         <tr>
-                          <td style={{width: 300, 'font-weight':'bold'}}>Global Merge Vars</td>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Global Merge Vars</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'mail.default.global_merge_vars'} />
                           </td>
@@ -202,7 +200,6 @@ var ContentEditable = React.createClass({
 
     componentDidUpdate: function () {
       if ( this.props.html !== this.getDOMNode().innerHTML ) {
-        console.log("should not update");
         this.getDOMNode().innerHTML = this.props.html;
       }
     },

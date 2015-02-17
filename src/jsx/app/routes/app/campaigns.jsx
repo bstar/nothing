@@ -10,7 +10,6 @@ var API = require('../../utils/api_utils');
 API.get("campaigns");
 
 function _getStateFromStores () {
-  console.log("_getStateFromStores()");
   return {
     refresh: Body.getCounter(), // used to redraw the component
     campaigns: CampaignStore.getCampaigns()
@@ -88,9 +87,9 @@ var Body = React.createClass({
                               </tr>
                             </thead>
                             <tbody>
-                              { this.state.campaigns.map(function (campaign) {
+                              { this.state.campaigns.map(function (campaign, i) {
                                 return (
-                                  <tr>
+                                  <tr key={i}>
                                     <td>{campaign.id}</td>
                                     <td>{campaign.name}</td>
                                     <td>{campaign.codecs[0]}</td>

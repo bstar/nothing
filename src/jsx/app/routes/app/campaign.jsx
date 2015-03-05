@@ -19,6 +19,7 @@ function _getStateFromStores () {
 
 var heading = {
   border: 'none',
+  'padding-top': '40px',
   'fontWeight': 'bold',
   'fontSize': '1.2em',
   'backgroundColor': 'white'
@@ -80,7 +81,7 @@ var Body = React.createClass({
                       </Row>
                     </Grid>
                   </PanelHeader>
-                  <PanelBody style={{padding: 25}}>
+                  <PanelBody style={{padding: "0px 0px 25px 25px"}}>
                     <Table striped bordered id='user' style={noBorder}>
                       <tbody>
                         <tr>
@@ -114,6 +115,39 @@ var Body = React.createClass({
                           <td style={{width: 300, 'fontWeight':'bold'}}>Campaign Stages</td>
                           <td>
                             <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'stages'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={heading}>Scene Configuration</td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Scene Reference ID</td>
+                          <td>
+                            <div href='#' key={this.state.refresh}>{this.state.campaign.scenes.id}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Composite File</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'scenes.composite_file'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Poster Frames</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'scenes.frames.posters'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Frame Ranges</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'scenes.frames.range'} />
+                          </td>
+                        </tr>
+                        <tr>
+                          <td style={{width: 300, 'fontWeight':'bold'}}>Total Frames</td>
+                          <td>
+                            <EditableField key={this.state.refresh} campaign={this.state.campaign} type={'scenes.frames.total'} />
                           </td>
                         </tr>
                         <tr>

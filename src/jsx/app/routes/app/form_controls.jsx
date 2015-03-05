@@ -4,29 +4,46 @@ var Header = require('../../common/header.jsx');
 var Sidebar = require('../../common/sidebar.jsx');
 var Footer = require('../../common/footer.jsx');
 
+
+// scoped data
+var campaignName = "demo";
+var clientName = "rukus";
+var compositeFile = "demo";
+var campaignId = "54ee8fa4fe1e875f7a77f297";
+
 var Body = React.createClass({
   handleSubmit: function (e) {
-    var payload = this.formatPayload();
-    var apiUrl = "http://localhost:4000/api";
-    var coreUrl = "http://localhost:8000/renders/kickoff";
-    var resource = "renders";
+    var payload = this.formatPayload(clientName, campaignName, campaignId),
+        apiUrl = "http://dev.rukus.io:4000/api",
+        coreUrl = "http://dev.rukus.io:8000/renders/kickoff/",
+        resource = "renders"
+        kickoff = true;
 
     request
       .post(apiUrl + "/" + resource)
       .send(payload)
       .end(onResponse);
 
-    function onResponse(err, res) {
-      console.log(res);
-    }
+    function onResponse (err, res) {
+      if (err) throw (err);
 
-    console.log(payload);
+      console.log(res.body);
+
+      if (kickoff) {
+        request
+          .post(coreUrl + res.body.id)
+          .send({ client_name: payload.client_name, campaign_name: payload.campaign_name, composite_file: compositeFile })
+          .end(function (err, core_res) {
+            if (err) throw (err);
+
+            console.log(core_res);
+          });
+      }
+    }
   },
 
-  formatPayload: function () {
-    var campaignId = "54d82b4ed878b913a1c9cc1d",
-        clientId = "blank",
-        payload = { content: { text: {}, images: {}, videos: {} }, clientId: clientId, campaignId: campaignId, created_at: "now", completed: "true" },
+  formatPayload: function (clientName, campaignName, campaignId) {
+        var payload = { content: { text: {}, images: {}, videos: {} }, client_name: clientName, campaign_name: campaignName, created_at: "now", completed: false, campaignId: campaignId },
         demoForm = $(".demo_form")[0].elements,
         field, matches, type, name;
 
@@ -44,35 +61,6 @@ var Body = React.createClass({
 
     return(payload);
   },
-
-
-  //def format_api_payload(content, client_id, campaign_id, config_id)
-    //file = File.read("#{Rails.root.join('lib', 'properties', client_id, campaign_id)}/#{config_id}.json")
-    //properties = JSON.parse(file)
-
-    //content.delete("no_where") if content[:no_where] == ""
-
-    //payload = { :content => { :text => {}, :images => {}, :videos => {} }, :client_id => client_id, :campaign_id => campaign_id  }.merge(properties)
-    //payload[:geo] = Geokit::Geocoders::MultiGeocoder.geocode(request.remote_ip)
-    //payload[:ipaddress] = request.remote_ip
-
-
-    //content.each do |key, value|
-      //if key.match(/content/)
-        //matches  = key.match(/^content_(.*)_(.*)$/)
-        //type     = matches[2].to_sym
-        //name     = matches[1].to_sym
-
-        //payload[:content][type][name] = value
-      //else
-        //payload[key] = value
-      //end
-    //end
-
-    //payload[:content][:text][:full_name] = payload[:content][:text][:first_name] + " " + payload[:content][:text][:last_name]
-
-    //return payload
-  //end
 
   render: function() {
     return (
@@ -107,8 +95,12 @@ var Body = React.createClass({
                               <Input name='content_text_last_name' type='text' id='withicon' placeholder='eg. Smith' />
                             </FormGroup>
                             <FormGroup>
-                              <Label htmlFor='withicon' control>Location</Label>
-                              <Input name='content_text_location' type='text' id='withicon' placeholder='eg. Vancouver' />
+                              <Label htmlFor='withicon' control>Region</Label>
+                              <Input name='content_text_region' type='text' id='withicon' placeholder='eg. Vancouver' />
+                            </FormGroup>
+                            <FormGroup>
+                              <Label htmlFor='withicon' control>Email</Label>
+                              <Input name='content_text_email' type='text' id='withicon' placeholder='eg. joesmith@email.com' />
                             </FormGroup>
                            </Form>
                         </Col>
